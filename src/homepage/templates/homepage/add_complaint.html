@@ -1,0 +1,74 @@
+{% extends "homepage/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="content-section">
+    
+    <form id="complaints_form" method="post" action="add_complaint/">
+        <center><h2>File Your Complaint</h2></center>
+        {% csrf_token %}
+        <div class="col-md-20"></div>
+        <div class="col-md-20">
+            <div class="form-group">
+                <input type="text" id="complaint_title" name="complaint_title" placeholder="Complaint Subject" class="form-control" >
+                {{ form.complaint_title.errors }}
+        </div>
+
+        <div class="form-group">
+            <input type="text" id="username" name="username" placeholder="username" class="form-control"  value="{{ user.username }}" readonly>
+            {{ form.username.errors }}
+        </div>
+    </div>
+    <div class="col-md-20"></div>
+    <div class="col-md-20">
+
+        <div class="form-group">
+            <select id="type_of_complaint" name="type_of_complaint" class="form-control">
+                <option value="GA">GARBAGE </option>
+                <option value="PH">POTHOLES</option>
+                <option value="SW">SEWAGE</option>
+                <option value="OT">OTHERS</option>
+            
+            </select>
+            {{ form.type_of_complaint.errors }}
+        </div>
+
+        <style>
+            #wrapper{ text-align: center;margin: 70px auto; }
+            #output_image{width: 350px; height: 250px; border: 4px;}
+        </style>
+        <script type="text/javascript">
+            function preview_image(event) {
+                var reader = new FileReader();
+                reader.onload = function()
+                {
+                    var output = document.getElementById('output_image');
+                    output.src = reader.result;
+                }
+                reader.readAsDataURL(event.target.files[0]);
+            }
+        </script>
+        <div id="wrapper">
+
+        <input type="file" onchange="preview_image(event)"  accept="image/*">
+        <img id="output_image"/>
+        </div>
+
+        <div class="form-group">
+            <textarea class="form-control" id="complaint_desc" name="complaint_desc"placeholder="Complaint Description" rows="7" cols="30">
+            </textarea>
+            {{ form.complaint_desc.errors }}
+        </div>
+
+        <div class="form-group">
+      <!-- Button -->
+        <input class="btn btn-primary btn-block" type="submit" name="submit" value="Submit Your Complaint" />
+        </div>
+
+    </div>
+
+</form>
+
+</div>
+
+{% endblock content %}
