@@ -4,9 +4,10 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 
 
+
 class Complaints(models.Model):
 	title = models.CharField(max_length=100)
-	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	username = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 	GARBAGE = 'GA'
@@ -22,8 +23,31 @@ class Complaints(models.Model):
 									choices=TYPEOFCOMP_CHOICES,
 									default=OTHERS)
 	image = models.ImageField(null=True,upload_to='user_upload')
-	content = models.TextField()
+	complaint_des = models.TextField(null=True)
 	date_posted = models.DateTimeField(default=timezone.now)
 
-	def __str__(self):
-		return self.title
+	SOLVED='SOLVED'
+	UNSOLVED='NOT SOLVED'
+	CON = 'UNDER CONSIDERATION'
+	SOLVED_CHOICES = (
+		(SOLVED, 'solved'),
+		(UNSOLVED, 'unsolved'),
+		(CON, 'under consideration')
+		)
+	solved = models.CharField(max_length=50,
+							choices=SOLVED_CHOICES,
+							default=UNSOLVED)
+	PREFERENCE_CHOICE = (
+		(1, 1),
+		(2, 2),
+		(3, 3),
+		(4, 4),
+		(5, 5),
+		) 
+	preference = models.IntegerField(choices=PREFERENCE_CHOICE,
+									default=0)
+	def __unicode__(self):
+		return "complain of :" + self.username
+
+	# def __str__(self):
+	# 	return self.title

@@ -4,14 +4,15 @@
 
 <div class="content-section">
     
-    <form id="complaints_form" method="post" action="add_complaint/">
-        <center><h2>File Your Complaint</h2></center>
+    <form id="complaints_form" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
+        <center><h2>File Your Complaint</h2></center>
+        
         <div class="col-md-20"></div>
         <div class="col-md-20">
             <div class="form-group">
                 <input type="text" id="complaint_title" name="complaint_title" placeholder="Complaint Subject" class="form-control" >
-                {{ form.complaint_title.errors }}
+                {{ form.title.errors }}
         </div>
 
         <div class="form-group">

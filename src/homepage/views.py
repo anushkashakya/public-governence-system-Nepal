@@ -13,25 +13,33 @@ def home(request):
 def about(request):
 	return render(request,'homepage/about.html', { 'title' : 'About' })
 
-def add_complaint(request):
-	if request.method == 'POST':
-		form = ComplaintsForm(request.POST) 
-		if form.is_valid():
-			forid =form.save()
-			valueid = forid.id
-			messages.success(request, f'Complaint created for {username}!')
+# def add_complaint(request):
+# 	if request.method == 'POST':
+# 		form = ComplaintsForm(request.POST) 
+# 		if form.is_valid():
+# 			forid =form.save()
+# 			valueid = forid.id
+# 			messages.success(request, f'Complaint created for {username}!')
 			
-			return render(request, 'homepage/home.html', {'valueid':valueid,'ac':"active"})
-		else:
-			print (form.errors)
-	else:
-			# If the request was not a POST, display the form to enter details.
-		form = ComplaintsForm()
+# 			return render(request, 'homepage/home.html', {'valueid':valueid,'ac':"active"})
+# 		else:
+# 			print (form.errors)
+# 	else:
+# 			# If the request was not a POST, display the form to enter details.
+# 		form = ComplaintsForm()
 
-	return render(request, 'homepage/add_complaint.html', {'form': form, 'ac':"active"})
+# 	return render(request, 'homepage/add_complaint.html', {'form': form, 'ac':"active"})
 
 
 	 
+
+def add_complaint(request):
+	if request == 'POST':
+		return render(request, 'homepage/home.html', {'valueid':valueid,'ac':"active"})
+	else:
+		form =  ComplaintsForm()
+	return render(request, 'homepage/add_complaint.html', {'form': form, 'ac':"active"})
+
 
 def complaint_status(request):
 	if request.method == 'POST':
